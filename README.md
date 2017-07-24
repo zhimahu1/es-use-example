@@ -1,12 +1,9 @@
 jpcloud zip包下载：http://jpcloud.jd.com/pages/viewpage.action?pageId=19932663
 
-||======================================================================================||
-||es-example大家有问题或者建议，或者好的example，欢迎发邮件到zhouzhichao@jd.com, jes@jd.com ||
-||======================================================================================||
-
+es-example大家有问题或者建议，或者好的example，欢迎发邮件到zhouzhichao@jd.com, jes@jd.com ||
 
 ElasticSearch使用java API例子，部分附HTTP API。
-本项目中的API版本：2.1
+本项目中的API版本：2.1.2
 
 参考文档：https://www.elastic.co/guide/en/elasticsearch/client/java-api/2.1/java-api.html
           https://www.elastic.co/guide/en/elasticsearch/reference/2.1/getting-started.html
@@ -19,7 +16,7 @@ Maven 3.1.1
 
                                     开始
 ==================================================================================
-Tool是一个工具类，里面配置了一些连接ES，进行测试的参数，可以修改，但一般不用修改
+Tool是一个工具类，里面配置了连接的ES集群的集群名，索引名，类型名，等参数，如果你想测试其它索引，可以在这里修改
 CLUSTER_NAME = "jiesi-1";//每个集群都有一个固定的集群名，不是随便指定的，jiesi-1是测试环境的测试集群
 INDEX_NAME = "agg_index";//索引，你可以指定自己的索引进行测试
 TYPE_NAME = "agg_type";//类型，你可以指定自己的类型进行测试
