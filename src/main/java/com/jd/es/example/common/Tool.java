@@ -22,10 +22,10 @@ public class Tool {
 
     //用集群名字，集群节点地址构建es client
     public static Client CLIENT = null;//保证单例，单例，单例！！！ 程序中千万不要new 多个client
-    public static String CLUSTER_NAME = "jiesi-1";//每个集群都有一个固定的集群名，不是随便指定的，jiesi-1是测试环境的测试集群
-    public static String INDEX_NAME = "agg_index";//索引，你可以指定自己的索引进行测试
-    public static String TYPE_NAME = "agg_type";//类型，你可以指定自己的类型进行测试
-    private static String CONNECTION_ADDRESS = "192.168.200.190:9303,192.168.200.191:9303";//要连接的ES节点的地址,端口是tcp端口
+    public static String CLUSTER_NAME = "jiesi-2.1.2";//每个集群都有一个固定的集群名，不是随便指定的，jiesi-1是测试环境的测试集群
+    public static String INDEX_NAME = "air_flight_query_index";//索引，你可以指定自己的索引进行测试
+    public static String TYPE_NAME = "air_flight_query_type";//类型，你可以指定自己的类型进行测试
+    private static String CONNECTION_ADDRESS = "192.168.182.13:20102,192.168.182.12:20102";//要连接的ES节点的地址,端口是tcp端口
     public static String URL = "http://192.168.200.190:9203";//ES集群中某节点的ip,http端口，可以通过该地址使用http方式访问集群
 
     static {

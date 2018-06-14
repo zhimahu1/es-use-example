@@ -25,77 +25,73 @@ public class IndexDoc {
     public static void prepareTestDoc(){
 
         String json1 = "{" +
-                "\"name\":\"c1\"," +
-                "\"gender\":\"male\"," +
-                "\"country\":\"China\"," +
-                "\"age\":\"1\"," +
-                "\"height\":\"10.0\"," +
-                "\"dateOfBirth\":\"2010-08-19 09:00:00\"" +
+                "\"depCity\":\"北京\"," +
+                "\"arrCity\":\"上海\"," +
+                "\"queryDate\":\"2018-06-22 00:00:00\"," +
+                "\"userPin\":\"huyanxia\"" +
                 "}";
 
         String json2 = "{" +
-                "\"name\":\"c2\"," +
-                "\"gender\":\"male\"," +
-                "\"country\":\"China\"," +
-                "\"age\":\"2\"," +
-                "\"height\":\"20.0\"," +
-                "\"dateOfBirth\":\"2011-08-19 09:00:00\"" +
+                "\"depCity\":\"北京\"," +
+                "\"arrCity\":\"三亚\"," +
+                "\"queryDate\":\"2018-06-21 00:00:00\"," +
+                "\"userPin\":\"huyanxia1\"" +
                 "}";
 
         String json3 = "{" +
-                "\"name\":\"c3\"," +
-                "\"gender\":\"female\"," +
-                "\"country\":\"China\"," +
-                "\"age\":\"3\"," +
-                "\"height\":\"30.0\"," +
-                "\"dateOfBirth\":\"2012-08-19 09:00:00\"" +
+                "\"depCity\":\"南京\"," +
+                "\"arrCity\":\"北京\"," +
+                "\"queryDate\":\"2018-06-24 00:00:00\"," +
+                "\"userPin\":\"huyanxia2\"" +
                 "}";
 
         String json4 = "{" +
-                "\"name\":\"c4\"," +
-                "\"gender\":\"female\"," +
-                "\"country\":\"China\"," +
-                "\"age\":\"4\"," +
-                "\"height\":\"40.0\"," +
-                "\"dateOfBirth\":\"2012-08-19 09:00:00\"" +
+                "\"depCity\":\"西安\"," +
+                "\"arrCity\":\"延安\"," +
+                "\"queryDate\":\"2018-06-22 00:00:00\"," +
+                "\"userPin\":\"huyanxia\"" +
                 "}";
 
         String json5 = "{" +
-                "\"name\":\"a5\"," +
-                "\"gender\":\"male\"," +
-                "\"country\":\"American\"," +
-                "\"age\":\"5\"," +
-                "\"height\":\"50.0\"," +
-                "\"dateOfBirth\":\"2013-08-19 09:00:00\"" +
+                "\"depCity\":\"海南\"," +
+                "\"arrCity\":\"山东\"," +
+                "\"queryDate\":\"2018-06-22 00:00:00\"," +
+                "\"userPin\":\"huyanxia\"" +
                 "}";
 
         String json6 = "{" +
-                "\"name\":\"a6\"," +
-                "\"gender\":\"male\"," +
-                "\"country\":\"American\"," +
-                "\"age\":\"6\"," +
-                "\"height\":\"60.0\"," +
-                "\"dateOfBirth\":\"2014-08-19 09:00:00\"" +
+                "\"depCity\":\"上\"," +
+                "\"arrCity\":\"北京\"," +
+                "\"queryDate\":\"2018-06-23 00:00:00\"," +
+                "\"userPin\":\"huyanxia\"" +
                 "}";
 
         String json7 = "{" +
-                "\"name\":\"a7\"," +
-                "\"gender\":\"female\"," +
-                "\"country\":\"American\"," +
-                "\"age\":\"7\"," +
-                "\"height\":\"70.0\"," +
-                "\"dateOfBirth\":\"2015-08-19 09:00:00\"" +
+                "\"depCity\":\"上海\"," +
+                "\"arrCity\":\"北京\"," +
+                "\"queryDate\":\"2018-06-23 00:00:00\"," +
+                "\"userPin\":\"huyanxia\"" +
                 "}";
 
         String json8 = "{" +
-                "\"name\":\"a8\"," +
-                "\"gender\":\"female\"," +
-                "\"country\":\"American\"," +
-                "\"age\":\"8\"," +
-                "\"height\":\"80.0\"," +
-                "\"dateOfBirth\":\"2015-08-19 09:00:00\"" +
+                "\"depCity\":\"上海\"," +
+                "\"queryDate\":\"2018-06-23 23:00:00\"," +
+                "\"userPin\":\"huyanxia5\"" +
                 "}";
 
+        String json9 = "{" +
+                "\"depCity\":\"北京\"," +
+                "\"arrCity\":\"上海\"," +
+                "\"queryDate\":\"2018-06-22 00:00:00\"," +
+                "\"userPin\":\"huyanxia\"" +
+                "}";
+
+        String json10 = "{" +
+                "\"depCity\":\"北京\"," +
+                "\"arrCity\":\"三亚\"," +
+                "\"queryDate\":\"2018-06-21 00:00:00\"," +
+                "\"userPin\":\"huyanxia1\"" +
+                "}";
 
         indexWithStr(Tool.INDEX_NAME, Tool.TYPE_NAME,"1",json1);
         indexWithStr(Tool.INDEX_NAME, Tool.TYPE_NAME,"2",json2);
@@ -105,6 +101,9 @@ public class IndexDoc {
         indexWithStr(Tool.INDEX_NAME, Tool.TYPE_NAME,"6",json6);
         indexWithStr(Tool.INDEX_NAME, Tool.TYPE_NAME,"7",json7);
         indexWithStr(Tool.INDEX_NAME, Tool.TYPE_NAME,"8",json8);
+        indexWithStr(Tool.INDEX_NAME, Tool.TYPE_NAME,"9",json9);
+        indexWithStr(Tool.INDEX_NAME, Tool.TYPE_NAME,"10",json10);
+
     }
 
 
