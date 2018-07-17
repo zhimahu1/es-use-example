@@ -4,6 +4,7 @@ import com.jd.es.example.common.*;
 import org.apache.log4j.Logger;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsResponse;
 import org.elasticsearch.action.fieldstats.FieldStats;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -17,6 +18,8 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramBuilder;
+import org.elasticsearch.search.aggregations.bucket.histogram.DateHistogramInterval;
 import org.elasticsearch.search.aggregations.bucket.histogram.Histogram;
 import org.elasticsearch.search.aggregations.bucket.range.date.DateRangeBuilder;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
@@ -50,15 +53,15 @@ public class Main {
             //如果测试环境的索引不存在，或者文档有更改，影响运行测试例子，运行下面三个方法初始化索引，和写入供测试的文档
             //DeleteIndex.testDeleteIndex(Tool.INDEX_NAME);//删除索引
             //CreateIndex.createIndex(Tool.INDEX_NAME, Tool.TYPE_NAME);//创建索引，mapping
-            IndexDoc.prepareTestDoc();//准备测试数据，向索引 agg_index 的类型 agg_type 写入8个文档
+            //IndexDoc.prepareTestDoc();//准备测试数据，向索引 agg_index 的类型 agg_type 写入8个文档
 
             //根据文档id批量删除文档
             //DeleteDoc.bulkDeleteDoc("string_test_index", "type1", new String[]{"AVfakzvt1qrH45UKETs0","AVfak0661qrH45UKETs1","AVfak10G1qrH45UKETs2"});
 
             //一个一般查询请求的示例
            //QueryBuilder qb = QueryBuilders.matchAllQuery();
-            //QueryBuilder qb1 = QueryBuilders.matchQuery();
 
+            //一个精确复合查询请求的示例
            /*QueryBuilder queryBuilder1 = QueryBuilders.matchQuery("depCity", "上海");
             QueryBuilder queryBuilder2 = QueryBuilders.matchQuery("arrCity", "北京");
 
@@ -66,6 +69,7 @@ public class Main {
             boolQueryBuilder.must(queryBuilder1);
             boolQueryBuilder.must(queryBuilder2);
 
+            //查询请求
             SearchRequestBuilder srb = Tool.CLIENT.prepareSearch(Tool.INDEX_NAME).setTypes(Tool.TYPE_NAME).setQuery(boolQueryBuilder).setSize(20);//setSize(3) 可以设置查询的文档数的大小，默认10
             logger.info("查询请求：\n"  + srb.toString());
             SearchResponse sResponse = srb.get();
@@ -74,25 +78,33 @@ public class Main {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date date = new Date();
             String endTime = simpleDateFormat.format(date);
+            //时间范围查询
             BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-            boolQueryBuilder.must(QueryBuilders.rangeQuery("queryDate").format("yyyy-MM-dd").gt("2018-06-21").lt("2018-06-24"));
+            boolQueryBuilder.must(QueryBuilders.rangeQuery("queryDate").format("yyyy-MM-dd").gte("2018-06-21").lt("2018-06-24"));
 
-           TermsBuilder teamAgg= AggregationBuilders.terms("depCity_count ").field("depCity").subAggregation(AggregationBuilders.count("depCity_count").field("depCity")).order(Terms.Order.aggregation("depCity_count", false));
-            /*AggregationBuilders.dateRange("agg")
+            //group by depCity order by count(*) desc
+            TermsBuilder teamAgg= AggregationBuilders.terms("depCity_count ").field("depCity").subAggregation(AggregationBuilders.count("depCity_count").field("depCity")).order(Terms.Order.aggregation("depCity_count", false));
+
+            //日期以天分组升序，与teamAgg作为子聚合
+            DateHistogramBuilder dateAgg=  AggregationBuilders.dateHistogram("queryDate_count")
                     .field("queryDate")
-                    .addUnboundedTo("1970").addRange("1970", "2000")
-                    .addRange("2000", "2010").addUnboundedFrom("2009");*/
-            TermsBuilder dateAgg= AggregationBuilders.terms("queryDate_count").field("queryDate").order(Terms.Order.term(true)).subAggregation(teamAgg);
-            //TermsBuilder posAgg= AggregationBuilders.dateHistogram("query_count").field("queryDate").subAggregation(AggregationBuilders.count("queryDate").field("arrCity")).order(Terms.Order.aggregation("arrCity_count", true));
+                    .interval(DateHistogramInterval.DAY).order(Histogram.Order.KEY_ASC).subAggregation(teamAgg);
+
+            //group by queryDate（具体到秒）并升序，与teamAgg作为子聚合
+            //TermsBuilder dateAgg= AggregationBuilders.terms("queryDate_count").field("queryDate").order(Terms.Order.term(true)).subAggregation(teamAgg);
 
             //SearchRequestBuilder srb = Tool.CLIENT.prepareSearch(Tool.INDEX_NAME).setTypes(Tool.TYPE_NAME).setQuery(boolQueryBuilder).setSize(20);//setSize(3) 可以设置查询的文档数的大小，默认10
 
-            SearchRequestBuilder srb = Tool.CLIENT.prepareSearch(Tool.INDEX_NAME).setTypes(Tool.TYPE_NAME).setQuery(boolQueryBuilder).addAggregation(dateAgg).setSize(20);//setSize(3) 可以设置查询的文档数的大小，默认10
+            //先根据日期范围查询，再group by queryDate（具体到秒）并升序，再group by depCity order by count(*) desc
+           /* SearchRequestBuilder srb = Tool.CLIENT.prepareSearch(Tool.INDEX_NAME).setTypes(Tool.TYPE_NAME).setQuery(boolQueryBuilder).addAggregation(dateAgg).setSize(20);//setSize(3) 可以设置查询的文档数的大小，默认10
 
             logger.info("查询请求：\n"  + srb.toString());
             SearchResponse sResponse = srb.get();
-            logger.info("查询结果：\n"  + sResponse.toString());
-            //logger.info("查询结果：\n"  + sResponse.getHits().getHits()[0].getSource().get("depCity"));
+            logger.info("查询结果：\n"  + sResponse.toString());*/
+            GetResponse response = Tool.CLIENT.prepareGet(Tool.INDEX_NAME,Tool.TYPE_NAME,"1").get();
+            logger.info("查询结果：\n"  + response.getSourceAsMap());
+
+
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }

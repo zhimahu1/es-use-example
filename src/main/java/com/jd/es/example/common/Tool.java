@@ -26,7 +26,7 @@ public class Tool {
     public static String INDEX_NAME = "air_flight_query_index";//索引，你可以指定自己的索引进行测试
     public static String TYPE_NAME = "air_flight_query_type";//类型，你可以指定自己的类型进行测试
     private static String CONNECTION_ADDRESS = "192.168.182.13:20102,192.168.182.12:20102";//要连接的ES节点的地址,端口是tcp端口
-    public static String URL = "http://192.168.200.190:9203";//ES集群中某节点的ip,http端口，可以通过该地址使用http方式访问集群
+    public static String URL = "http://192.168.182.13:20102";//ES集群中某节点的ip,http端口，可以通过该地址使用http方式访问集群
 
     static {
         try {

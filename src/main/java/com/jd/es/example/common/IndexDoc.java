@@ -27,7 +27,7 @@ public class IndexDoc {
         String json1 = "{" +
                 "\"depCity\":\"北京\"," +
                 "\"arrCity\":\"上海\"," +
-                "\"queryDate\":\"2018-06-22 00:00:00\"," +
+                "\"queryDate\":\"2018-06-21 00:00:00\"," +
                 "\"userPin\":\"huyanxia\"" +
                 "}";
 

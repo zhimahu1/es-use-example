@@ -27,8 +27,8 @@ public class IkAnalyzer {
 
     private static Logger logger = LoggerFactory.getLogger(IkAnalyzer.class);
 
-    private static String IndexName = "ik_test";
-    private static String TypeName = "type_name";
+    private static String IndexName = "air_flight_ikindex";
+    private static String TypeName = "air_flight_iktype";
 
     /* ik可以对中文，也可以对英文分词
     ik_test/_analyze?analyzer=ik
@@ -46,7 +46,7 @@ public class IkAnalyzer {
         //createIndexAndMapping();
 
         //写入文档
-        //indexDoc();
+        indexDoc();
 
         //比较分词结果
         String s1 = "小明是中华人民共和国的公民";
@@ -103,9 +103,9 @@ public class IkAnalyzer {
 
     //插入文档
     private static void indexDoc() {
-        IndexDoc.indexWithStr(IndexName, TypeName, "1", "{\"english_field\":\"小明是中华人民共和国的公民\",\"ik_field\":\"小明是中华人民共和国的公民\"}");
-        IndexDoc.indexWithStr(IndexName, TypeName, "2", "{\"english_field\":\"如果明天天气好的话，小明和小红一起去人民公园赏樱花。\",\"ik_field\":\"如果明天天气好的话，小明和小红一起去人民公园赏樱花。\"}");
-        IndexDoc.indexWithStr(IndexName, TypeName, "3", "{\"english_field\":\"小明喜欢小红，但是小红喜欢小华。\",\"ik_field\":\"小明喜欢小红，但是小红喜欢小华。\"}");
+        IndexDoc.indexWithStr(IndexName, TypeName, "1", "{\"name\":\"小明是中华人民共和国的公民\",\"myname\":\"小明是中华人民共和国的公民\"}");
+        IndexDoc.indexWithStr(IndexName, TypeName, "2", "{\"name\":\"如果明天天气好的话，小明和小红一起去人民公园赏樱花。\",\"myname\":\"如果明天天气好的话，小明和小红一起去人民公园赏樱花。\"}");
+        IndexDoc.indexWithStr(IndexName, TypeName, "3", "{\"name\":\"小明喜欢小红，但是小红喜欢小华。\",\"myname\":\"小明喜欢小红，但是小红喜欢小华。\"}");
     }
 
 
